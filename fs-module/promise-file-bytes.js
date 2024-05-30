@@ -7,18 +7,21 @@ const buffer = Buffer.alloc(1024);
 const file = './test.txt';
 
 async function readFile() {
-    // Prepare to store File Descriptor
-    let fd;
+    // Prepare to store a File Handler => 
+    // fh.fd to extract File Descriptor
+    let fh;
     
     try {
         // Step 1: Open the File
-        fd = await fs.open(file, 'r');
-
+        fh = await fs.open(file, 'r');
+        
+        console.log(`fileHandler.fileDescriptor:\n${fh.fd}`);
+        console.log(`\n`);
         // Step 2: Read from the File
         const { 
             bytesRead, 
             buffer: buf 
-        } = await fd.read(buffer, 0, buffer.length, null);
+        } = await fh.read(buffer, 0, buffer.length, null);
         
         console.log(`Number of Bytes read:\n${bytesRead}`);
         console.log(`\n`);
@@ -28,8 +31,8 @@ async function readFile() {
         console.error(`Error: ${err}`);
     } finally {
         // Step 3: Close the File (if it was opened)
-        if (fd) {
-            await fd.close()
+        if (fh) {
+            await fh.close()
             .then(() => {
                 return console.log(`File successfully closed`);
             })
