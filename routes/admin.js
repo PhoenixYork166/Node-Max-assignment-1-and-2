@@ -9,7 +9,7 @@ const router = express.Router();
 // all request types
 
 // Router handler for 
-// add-product GET request
+// /admin/add-product GET request handler
 router.get('/add-product', (req, res, next) => {
     // This allows us to hook into this Funnel 
     // through which the HTTP request to send
@@ -43,6 +43,7 @@ router.get('/add-product', (req, res, next) => {
     res.end();
 });
 
+// /admin/add-product POST request handler
 router.post('/add-product', (req, res, next) => {
     const body = req.body;
     console.log(`req.body.title:\n${body.title}`);

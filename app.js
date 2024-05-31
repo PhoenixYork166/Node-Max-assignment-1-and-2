@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Using middleware for adminRoutes
 // routes/admin.js
-// add '/admin' segment as a filter
+// add '/admin' segment as a filter path
 app.use('/admin', adminRoutes);
 
 // Using middleware for shopRoutes
