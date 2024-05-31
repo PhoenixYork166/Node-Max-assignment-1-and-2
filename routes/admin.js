@@ -1,4 +1,6 @@
+const path = require('path');
 const express = require('express');
+const rootDir = require('../util/path');
 
 // calling Router from express.Router() method
 // router is a pluggable mini Express app
@@ -11,36 +13,30 @@ const router = express.Router();
 // Router handler for 
 // /admin/add-product GET request handler
 router.get('/add-product', (req, res, next) => {
-    // This allows us to hook into this Funnel 
-    // through which the HTTP request to send
-    console.log(`Using another middleware!\nSending /add-product response`);
-    console.log(`\n`);
-    // Send a HTTP response with a Body
+    console.log(`router.get is serving views/add-product.html`);
 
-    // Start the Response & send the doctype & opening HTML tags
-    res.write(`<!DOCTYPE html>`);
-    res.write(`<html lang="en">`);
+    const addProductPage = path.join(rootDir, 'views', 'add-product.html');
 
-    // Head section with meta and title
-    res.write(`<head>`);
-    res.write(`<meta charset="UTF-8">`);
-    res.write(`<meta name="viewport" content="widt=device-width, initial-scale=1.0">`);
-    res.write(`<title>add-product page</title>`);
-    res.write(`</head>`);
+    // res.sendFile(filePath, (err) => {...}) 
+    // to send HTML to '/add-product' requests
+    // SEE any Filter paths in app.js e.g. '/admin/add-product'
+    res.sendFile(addProductPage, (err) => {
+        if (err) {
+            // Log the Error for server-side debugging
+            console.error(`Error sending /views/add-product.html\n${err}`);
 
-    // Body section
-    res.write(`<body>`);
-    res.write(`<form action="/admin/add-product" method="POST">`);
-    res.write(`<input type="text" name="title">`);
-    res.write(`<button type="submit">Add Product</button>`);
-    res.write(`</form>`);
-    res.write(`</body>`);
-
-    // Closing HTML tags
-    res.write(`</html>`);
-
-    // Ending an HTML page
-    res.end();
+            // Check if the HTTP headers have already been sent
+            if (res.headersSent) {
+                // If HTTP Headers are sent
+                // delegate to the default Express err handler
+                return next(err);
+            } else {
+                // If HTTP headers are NOT sent
+                // respond with a 500 Internal Server Error
+                res.status(500).send(`Error sending /views/add-product.html`);
+            }
+        }
+    });
 });
 
 // /admin/add-product POST request handler

@@ -13,8 +13,14 @@ const shopRoutes = require('./routes/shop');
 // routes/404.js
 const notFound = require('./routes/404');
 
+const rootDir = require('./util/path');
+
 // creating an Express application
 const app = express();
+
+console.log(`rootDir:`);
+console.log(rootDir);
+console.log(`\n`);
 
 // Using Express new built-in Body Parser middleware 
 // to parse req.body
