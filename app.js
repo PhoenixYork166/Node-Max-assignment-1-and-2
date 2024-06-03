@@ -1,5 +1,6 @@
 // using Express
 const express = require('express');
+const path = require('path');
 
 // importing module.exports = router in
 // routes/admin.js
@@ -25,6 +26,9 @@ console.log(`\n`);
 // Using Express new built-in Body Parser middleware 
 // to parse req.body
 app.use(express.urlencoded({ extended: false }));
+
+// Express middleware to serve static files
+app.use(express.static(path.join(rootDir, 'public')));
 
 // Using middleware for adminRoutes
 // routes/admin.js
