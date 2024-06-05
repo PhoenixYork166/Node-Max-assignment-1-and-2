@@ -1,0 +1,26 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title #{pageTitle}
+        // Although 19 Internet Explorer has come to an end
+        // Wanna ensure users with 19 Internet Explorer
+        // to be able to view this page seamlessly
+        meta(http-equiv="X-UA-Compatible", content="ie=eedge")
+        // Adding CSS links
+        link(rel="stylesheet", href="/css/main.css")
+
+        block styles
+    body
+        header.main-header
+            nav.main-header__nav
+                ul.main-header__ul 
+                    li.main-header__li
+                        // conditional rendering
+                        // path is res.render('add-product', { pageTitle: 'Add Product', path: '/admin/add-product' });inside routes/admin.js
+                        a.active(href="/", class=(path === '/' ? 'active' : '')) Shop
+                    li.main-header__li
+                        a(href="/admin/add-product", class=(path === '/admin/add-product' ? 'active' : '')) Add Product
+
+        block content

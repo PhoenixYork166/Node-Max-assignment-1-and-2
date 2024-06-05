@@ -6,6 +6,9 @@ const rootDir = require('../util/path');
 // router is a pluggable mini Express app
 const router = express.Router();
 
+// Preparing to store products as an array
+const products = [];
+
 // router.use() = an agent pluggable into any Express app
 // route.use() is similar to app.use()
 // all request types
@@ -13,13 +16,22 @@ const router = express.Router();
 // Router handler for 
 // /admin/add-product GET request handler
 router.get('/add-product', (req, res, next) => {
-    console.log(`router.get is serving views/add-product.html`);
+    console.log(`Hosting views/add-product.html through router.get\n`);
 
     const addProductPage = path.join(rootDir, 'views', 'add-product.html');
+
+    // res.render('views/add-product.pug', data) defaults to rootDir/views
+    // res.render('.pug', data) will look up .pug files
+    // & pass in templates
+    res.render('add-product', { 
+        pageTitle: 'Add Product',
+        path: '/admin/add-product',
+    } );
 
     // res.sendFile(filePath, (err) => {...}) 
     // to send HTML to '/add-product' requests
     // SEE any Filter paths in app.js e.g. '/admin/add-product'
+    /*
     res.sendFile(addProductPage, (err) => {
         if (err) {
             // Log the Error for server-side debugging
@@ -37,15 +49,24 @@ router.get('/add-product', (req, res, next) => {
             }
         }
     });
+    */
 });
 
 // /admin/add-product POST request handler
 router.post('/add-product', (req, res, next) => {
     const body = req.body;
-    console.log(`req.body.title:\n${body.title}`);
+    console.log(`req.body.title:\n${body.title}\n`);
+
+    // Pushing a new object into const products = []; array
+    products.push({ title: req.body.title });
+
     res.status(301).redirect('/');
 });
 
 // Exporting this Router to global
-module.exports = router;
+//module.exports = router;
+
+// Another way of exporting Express Routes
+exports.routes = router;
+exports.products = products;
 

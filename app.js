@@ -19,6 +19,13 @@ const rootDir = require('./util/path');
 // creating an Express application
 const app = express();
 
+// Implementing Pug Templating Enginer
+// app.set('name', 'value);
+app.set('view engine', 'pug');
+
+// Express.js defaults rootDir/views to 'views'
+app.set('views', 'views');
+
 console.log(`rootDir:`);
 console.log(rootDir);
 console.log(`\n`);
@@ -33,7 +40,10 @@ app.use(express.static(path.join(rootDir, 'public')));
 // Using middleware for adminRoutes
 // routes/admin.js
 // add '/admin' segment as a filter path
-app.use('/admin', adminRoutes);
+// app.use('/admin', adminRoutes);
+
+// As we changed the way we export objects in routes/admin.js
+app.use('/admin', adminRoutes.routes);
 
 // Using middleware for shopRoutes
 // routes/shop.js
