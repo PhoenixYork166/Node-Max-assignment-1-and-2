@@ -2,8 +2,8 @@
 const express = require('express');
 const path = require('path');
 
-// importing module.exports = router in
-// routes/admin.js
+// importing routes defined by module.exports = router 
+// from routes/admin.js
 const adminRoutes = require('./routes/admin');
 
 // importing module.exports = router in
@@ -21,6 +21,7 @@ const app = express();
 
 // Implementing Pug Templating Enginer
 // app.set('name', 'value);
+// app.set('view engine', 'hbs');
 app.set('view engine', 'pug');
 
 // Express.js defaults rootDir/views to 'views'
@@ -43,7 +44,7 @@ app.use(express.static(path.join(rootDir, 'public')));
 // app.use('/admin', adminRoutes);
 
 // As we changed the way we export objects in routes/admin.js
-app.use('/admin', adminRoutes.routes);
+app.use('/admin', adminRoutes);
 
 // Using middleware for shopRoutes
 // routes/shop.js
