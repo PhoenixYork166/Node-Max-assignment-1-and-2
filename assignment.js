@@ -2,10 +2,8 @@ const http = require('http');
 const { parse } = require('querystring');
 
 const server = http.createServer((req, res) => {
-
     const url = req.url;
     const method = req.method;
-    
     /*
     if (url === '/') {
         console.log(req.url, req.method, req.headers); // Log the request URL to the console
